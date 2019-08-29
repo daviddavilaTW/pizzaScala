@@ -2,27 +2,26 @@ package com.acme.pizza
 
 import org.scalatest.FunSpec
 import org.scalatest.BeforeAndAfter
+import org.scalatest.GivenWhenThen
 
-class PizzaSpec extends FunSpec with BeforeAndAfter {
+class PizzaSpec extends FunSpec with GivenWhenThen {
 
   var pizza : Pizza = _
 
-  before{
+  describe("A pizza"){
+
+    Given("A new pizza")
     pizza = new Pizza
-  }
 
-  describe("A Pizza"){
+    When("a topping is added")
+    pizza.addToppings(Topping("Salami"))
 
-    it("should start creating an empty pizza with no toppings"){
-      assert(pizza.getToppings.size == 0)
-    }
+    Then("the topping should be incremented")
+    assertResult(1) {pizza.getToppings.size}
 
-    it("should allow addition of toppings") (pending)
-
-    it("should allow removal of toppings") (pending)
-
-
-
+    And("the topping should be what was added")
+    val t = pizza.getToppings(0)
+    assert(t===new Topping("Salami"))
   }
 
 }
